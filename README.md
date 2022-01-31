@@ -7,6 +7,8 @@ ArizonaRP Forum API w/o XenForo API keys
 ## Пример: 
 
 ```python
+import api 
+
 user_agent = "Mozilla/5.0..."
 cookies = "_ym_uid=162..."
 api.setup(user_agent, cookies)
