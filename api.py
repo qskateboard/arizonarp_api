@@ -160,3 +160,42 @@ def pin_thread(url):
         "_xfResponseType": "json",
     }
     r = session.post(url + "quick-stick", data=query)
+
+
+def make_reaction(link, uid):
+    reacted = False
+    if "post-" in link:
+        link = link.split("post-")[1].replace("/", "")
+        try:
+            uri = "https://forum.arizona-rp.com/posts/{}/react".format(link)
+            q = session.get("https://forum.arizona-rp.com/posts/" + link + "/react?reaction_id=" + str(uid))
+            if "Вы действительно хотите оставить эту реакцию?" in q.text:
+                token = re.compile("name=\"_xfToken\" value=\"(.*)\" />").findall(q.text)[6]
+                session.post(uri, data={"reaction_id": uid, "_xfToken": token})
+                reacted = True
+        except:
+            print("[-] Произошла ошибка при установке реакции")
+    else:
+        if "https://forum.arizona-rp.com/threads/" in link:
+            try:
+                q = session.get(link)
+                soup = bs4.BeautifulSoup(q.text, "lxml")
+                for post in soup.findAll('article', {'class': 'message'}):
+                    hrefs = post.findAll('a')
+                    for a in hrefs:
+                        if "/post-" in a['href']:
+                            number = a['href'].split("post-")[1].replace("/", "")
+                            uri = "https://forum.arizona-rp.com/posts/{}/react".format(str(number))
+                            q = session.get("https://forum.arizona-rp.com/posts/" + number + "/react?reaction_id=" + str(uid))
+                            if "Вы действительно хотите оставить эту реакцию?" in q.text:
+                                token = re.compile("name=\"_xfToken\" value=\"(.*)\" />").findall(q.text)[6]
+                                session.post(uri, data={"reaction_id": uid, "_xfToken": token})
+                                reacted = True
+                            break
+                        if reacted:
+                            break
+                    if reacted:
+                        break
+            except:
+                print("[-] Произошла ошибка при установке реакции")
+    return reacted
