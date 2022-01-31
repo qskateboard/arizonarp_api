@@ -29,3 +29,4 @@ for thread in api.get_threads("https://forum.arizona-rp.com/forums/1583/"):
 - get_thread(url) - Вывести название темы и содержание первого поста
 - close_thread(url) - Закрыть тему
 - pin_thread(url) - Закрепить тему
+- make_reaction(url, reaction_id) - Установить реакцию на пост
