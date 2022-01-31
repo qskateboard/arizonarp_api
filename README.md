@@ -21,9 +21,9 @@ for thread in api.get_threads("https://forum.arizona-rp.com/forums/1583/"):
 - get_category(url) - Вывести название категории
 - get_threads(url) - Вывести все темы в разделе
 - get_post(url) - Вывести всю информацию по посту
-- edit_post(url) - Редактирование поста (HTML)
+- edit_post(url, html) - Редактирование поста (HTML)
 - set_unread(url) - Установить все темы в выбранном разделе прочитанными
-- send_message(url) - Отправить сообщение в тему (BB Codes)
+- send_message(url, message) - Отправить сообщение в тему (BB Codes)
 - get_thread(url) - Вывести название темы и содержание первого поста
 - close_thread(url) - Закрыть тему
 - pin_thread(url) - Закрепить тему
